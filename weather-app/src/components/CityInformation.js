@@ -1,7 +1,7 @@
 import ZipForm from "./ZipForm";
 import ToggleDisplay from "./ToggleDisplay";
 
-const CityInformation = ({ weather }) => {
+const CityInformation = ({ weather, handleSubmission }) => {
   return (
     <section>
       <h2>Current weather in... {weather.location}</h2>
@@ -11,7 +11,7 @@ const CityInformation = ({ weather }) => {
         <li>Today's High: {weather.temp_high}</li>
         <li>Today's Low: {weather.temp_low}</li>
       </ul>
-      <ZipForm></ZipForm>
+      <ZipForm handleSubmission={handleSubmission}></ZipForm>
       <ToggleDisplay weather={weather}></ToggleDisplay>
     </section>
   );

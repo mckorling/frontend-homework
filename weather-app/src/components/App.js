@@ -28,7 +28,7 @@ function App() {
           pressure: data["main"]["pressure"],
           humidity: data["main"]["humidity"],
         });
-        console.log(weatherData);
+        // console.log(weatherData);
       })
       .catch((error) => {
         console.log(error);
@@ -43,7 +43,10 @@ function App() {
     <div className="App">
       <h1>Weather App</h1>
       <h2>{weatherData.location}</h2>
-      <CityInformation weather={weatherData}></CityInformation>
+      <CityInformation
+        weather={weatherData}
+        handleSubmission={getLocationInformation}
+      ></CityInformation>
       <Forecast></Forecast>
     </div>
   );
