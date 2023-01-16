@@ -1,9 +1,13 @@
+import Day from "./Day";
+
 const Forecast = ({ weather }) => {
+  const dayComponents = weather.map((day) => (
+    <Day date={day.date} temp={day.temp} description={day.description}></Day>
+  ));
   return (
     <div>
-      <p>Display 7 day forecast here</p>
-      <p>Day 1</p>
-      <p>{weather[0]["temp"]}</p>
+      <h2>7 Day Forecast</h2>
+      {dayComponents}
     </div>
   );
 };
