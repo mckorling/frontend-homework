@@ -28,22 +28,25 @@ function App() {
           location: data["name"],
         });
         const currentToggleData = [];
-        currentToggleData.push({ field: "Wind", value: data["wind"]["speed"] });
+        currentToggleData.push({
+          field: "Wind",
+          value: `${data["wind"]["speed"]} mph`,
+        });
         currentToggleData.push({
           field: "Pressure",
-          value: data["main"]["pressure"],
+          value: `${data["main"]["pressure"]} hPa`,
         });
         currentToggleData.push({
           field: "Humidity",
-          value: data["main"]["humidity"],
+          value: `${data["main"]["humidity"]}%`,
         });
         currentToggleData.push({
           field: "Sunrise",
-          value: data["sys"]["sunrise"],
+          value: getTime(data["sys"]["sunrise"]),
         });
         currentToggleData.push({
           field: "Sunset",
-          value: data["sys"]["sunset"],
+          value: getTime(data["sys"]["sunset"]),
         });
         setToggleData(currentToggleData);
 
@@ -53,6 +56,17 @@ function App() {
         alert("Please enter a valid US zip code or check your connection");
         console.log(error);
       });
+  };
+  const getDay = (time) => {
+    const date = new Date(time * 1000);
+    const day = date.toDateString();
+    return day.slice(0, 3);
+  };
+
+  const getTime = (time) => {
+    const date = new Date(time * 1000);
+    const convertedTime = date.toLocaleTimeString();
+    return convertedTime;
   };
 
   useEffect(() => {
@@ -70,7 +84,7 @@ function App() {
         const weather = [];
         for (let oneDay of data) {
           weather.push({
-            date: oneDay["dt"],
+            date: getDay(oneDay["dt"]),
             temp: oneDay["temp"]["day"],
             description: oneDay["weather"]["main"],
           });
