@@ -1,4 +1,4 @@
-const Forecast = (props) => {
+const Forecast = ({ weather }) => {
   return <div>Display 7 day forecast here</div>;
 };
 
