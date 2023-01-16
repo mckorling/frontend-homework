@@ -11,6 +11,8 @@ function App() {
   const [currentWeather, setCurrentWeather] = useState({});
   const [weekForecastWeather, setForecastWeather] = useState([]);
   const [toggleData, setToggleData] = useState({});
+  const [dayHigh, setDayHigh] = useState(0.0);
+  const [dayLow, setDayLow] = useState(0.0);
 
   const getLocationInformation = (zip) => {
     axios
@@ -22,8 +24,6 @@ function App() {
         setCurrentWeather({
           description: data["weather"][0]["main"],
           temp: data["main"]["temp"],
-          temp_high: data["main"]["temp_max"],
-          temp_low: data["main"]["temp_min"],
           location: data["name"],
         });
         setToggleData({
@@ -33,6 +33,7 @@ function App() {
           pressure: data["main"]["pressure"],
           humidity: data["main"]["humidity"],
         });
+        getForecast(data["coord"]["lat"], data["coord"]["lon"]);
       })
       .catch((error) => {
         // make pop up alert for invalid zip code / no connection
@@ -42,18 +43,13 @@ function App() {
 
   useEffect(() => {
     getLocationInformation("10036");
-    // getForecast("10036");
-    // display 7 day forecast
   }, []);
 
-  // Add function to pull in and update the 7 day forecast
-  // Want to show weather description, day's temp, for now
-  // api.openweathermap.org/data/2.5/forecast/daily?lat=44.34&lon=10.99&cnt=7&appid=
-  // `https://api.openweathermap.org/data/2.5/forecast/daily?zip=${zip},us&cnt=7&appid=${API_KEY}&units=imperial`
-  const getForecast = (zip) => {
+  const getForecast = (lat, lon) => {
+    console.log(`in getForecast and lat and lon are: ${lat}, ${lon}`);
     axios
       .get(
-        `https://api.openweathermap.org/data/2.5/forecast?zip=${zip},us&cnt=7&appid=${API_KEY}&units=imperial`
+        `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,hourly,minutely,alerts&units=imperial&appid=${API_KEY}`
       )
       .then((response) => {
         let data = response.data.daily.slice(0, 7);
@@ -67,6 +63,8 @@ function App() {
           });
         }
         setForecastWeather(weather);
+        setDayHigh(data[0]["temp"]["max"]);
+        setDayLow(data[0]["temp"]["min"]);
       })
       .catch((error) => {
         console.log(error);
@@ -80,11 +78,14 @@ function App() {
       <CityInformation
         weather={currentWeather}
         toggleData={toggleData}
+        low={dayLow}
+        high={dayHigh}
         // pass down forecast function
       ></CityInformation>
+      <p>day high: {dayHigh}</p>
+      <p>day low: {dayLow}</p>
       <ZipForm handleSubmission={getLocationInformation}></ZipForm>
       <Forecast weather={weekForecastWeather}></Forecast>
-      {/* pass in forecast data */}
     </div>
   );
 }
