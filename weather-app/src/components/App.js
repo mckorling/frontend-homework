@@ -50,7 +50,7 @@ function App() {
         getForecast(data["coord"]["lat"], data["coord"]["lon"]);
       })
       .catch((error) => {
-        // make pop up alert for invalid zip code / no connection
+        alert("Please enter a valid US zip code or check your connection");
         console.log(error);
       });
   };
@@ -60,7 +60,6 @@ function App() {
   }, []);
 
   const getForecast = (lat, lon) => {
-    console.log(`in getForecast and lat and lon are: ${lat}, ${lon}`);
     axios
       .get(
         `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,hourly,minutely,alerts&units=imperial&appid=${API_KEY}`
@@ -82,7 +81,7 @@ function App() {
       })
       .catch((error) => {
         console.log(error);
-        // make pop up for invalid zip code/no connection
+        // any alert is handled by first call in getLocationInformation
       });
   };
 

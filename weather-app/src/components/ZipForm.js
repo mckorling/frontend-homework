@@ -3,7 +3,7 @@ import { useState } from "react";
 const ZipForm = ({ handleSubmission }) => {
   const [currentZip, setCurrentLoc] = useState("");
   const validateZip = (zip) => {
-    if (zip.match(/[0-9]{5}/)) {
+    if (zip.length === 5 && zip.match(/[0-9]/)) {
       return true;
     }
     return false;
@@ -19,11 +19,10 @@ const ZipForm = ({ handleSubmission }) => {
     event.preventDefault();
 
     if (validateZip(currentZip)) {
-      handleSubmission(currentZip); // update today's current weather
-      // Need to handle updating 7 day forecast
-      console.log(currentZip);
+      handleSubmission(currentZip);
     } else {
       console.log("INVALID ZIP CODE ENTERED");
+      alert("You must enter a 5-digit US zip code");
     }
   };
 
