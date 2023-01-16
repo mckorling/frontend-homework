@@ -1,6 +1,4 @@
-import ToggleDisplay from "./ToggleDisplay";
-
-const CityInformation = ({ weather, toggleData, high, low }) => {
+const CityInformation = ({ weather, high, low }) => {
   return (
     <section>
       <h2>Current weather in... {weather.location}</h2>
@@ -10,7 +8,6 @@ const CityInformation = ({ weather, toggleData, high, low }) => {
         <li>Today's High: {high}</li>
         <li>Today's Low: {low}</li>
       </ul>
-      <ToggleDisplay toggleData={toggleData}></ToggleDisplay>
     </section>
   );
 };

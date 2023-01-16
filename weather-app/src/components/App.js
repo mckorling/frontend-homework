@@ -4,13 +4,14 @@ import CityInformation from "./CityInformation";
 import Forecast from "./Forecast";
 import { useEffect, useState } from "react";
 import ZipForm from "./ZipForm";
+import ToggleList from "./ToggleList";
 
 function App() {
   const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
 
   const [currentWeather, setCurrentWeather] = useState({});
   const [weekForecastWeather, setForecastWeather] = useState([]);
-  const [toggleData, setToggleData] = useState({});
+  const [toggleData, setToggleData] = useState([]);
   const [dayHigh, setDayHigh] = useState(0.0);
   const [dayLow, setDayLow] = useState(0.0);
 
@@ -26,13 +27,26 @@ function App() {
           temp: data["main"]["temp"],
           location: data["name"],
         });
-        setToggleData({
-          wind: data["wind"]["speed"],
-          sunrise: data["sys"]["sunrise"],
-          sunset: data["sys"]["sunset"],
-          pressure: data["main"]["pressure"],
-          humidity: data["main"]["humidity"],
+        const currentToggleData = [];
+        currentToggleData.push({ field: "Wind", value: data["wind"]["speed"] });
+        currentToggleData.push({
+          field: "Pressure",
+          value: data["main"]["pressure"],
         });
+        currentToggleData.push({
+          field: "Humidity",
+          value: data["main"]["humidity"],
+        });
+        currentToggleData.push({
+          field: "Sunrise",
+          value: data["sys"]["sunrise"],
+        });
+        currentToggleData.push({
+          field: "Sunset",
+          value: data["sys"]["sunset"],
+        });
+        setToggleData(currentToggleData);
+
         getForecast(data["coord"]["lat"], data["coord"]["lon"]);
       })
       .catch((error) => {
@@ -53,7 +67,7 @@ function App() {
       )
       .then((response) => {
         let data = response.data.daily.slice(0, 7);
-        console.log(data);
+
         const weather = [];
         for (let oneDay of data) {
           weather.push({
@@ -80,10 +94,8 @@ function App() {
         toggleData={toggleData}
         low={dayLow}
         high={dayHigh}
-        // pass down forecast function
       ></CityInformation>
-      <p>day high: {dayHigh}</p>
-      <p>day low: {dayLow}</p>
+      <ToggleList toggleData={toggleData}></ToggleList>
       <ZipForm handleSubmission={getLocationInformation}></ZipForm>
       <Forecast weather={weekForecastWeather}></Forecast>
     </div>
