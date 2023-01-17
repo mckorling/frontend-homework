@@ -2,6 +2,7 @@ import { useState } from "react";
 
 const ZipForm = ({ handleSubmission }) => {
   const [currentZip, setCurrentLoc] = useState("");
+
   const validateZip = (zip) => {
     if (zip.length === 5 && zip.match(/[0-9]/)) {
       return true;

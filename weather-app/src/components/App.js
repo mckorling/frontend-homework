@@ -15,6 +15,10 @@ function App() {
   const [dayHigh, setDayHigh] = useState(0.0);
   const [dayLow, setDayLow] = useState(0.0);
 
+  useEffect(() => {
+    getLocationInformation("10036");
+  }, []);
+
   const getLocationInformation = (zip) => {
     axios
       .get(
@@ -57,21 +61,6 @@ function App() {
         console.log(error);
       });
   };
-  const getDay = (time) => {
-    const date = new Date(time * 1000);
-    const day = date.toDateString();
-    return day.slice(0, 3);
-  };
-
-  const getTime = (time) => {
-    const date = new Date(time * 1000);
-    const convertedTime = date.toLocaleTimeString();
-    return convertedTime;
-  };
-
-  useEffect(() => {
-    getLocationInformation("10036");
-  }, []);
 
   const getForecast = (lat, lon) => {
     axios
@@ -86,9 +75,10 @@ function App() {
           weather.push({
             date: getDay(oneDay["dt"]),
             temp: oneDay["temp"]["day"],
-            description: oneDay["weather"]["main"],
+            description: oneDay["weather"][0]["main"],
           });
         }
+        console.log(weather);
         setForecastWeather(weather);
         setDayHigh(data[0]["temp"]["max"]);
         setDayLow(data[0]["temp"]["min"]);
@@ -97,6 +87,18 @@ function App() {
         console.log(error);
         // any alert is handled by first call in getLocationInformation
       });
+  };
+
+  const getDay = (time) => {
+    const date = new Date(time * 1000);
+    const day = date.toDateString();
+    return day.slice(0, 3);
+  };
+
+  const getTime = (time) => {
+    const date = new Date(time * 1000);
+    const convertedTime = date.toLocaleTimeString();
+    return convertedTime;
   };
 
   return (
