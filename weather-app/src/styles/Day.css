@@ -1,0 +1,13 @@
+.oneDay {
+    background-color: #0077B6;
+    color: #fff;
+    padding: 1em 1.5em;
+    border-radius: .6em;
+    margin-bottom: 1.5em;
+    text-align: center;
+    border: 1px solid #03045E;
+}
+
+#date {
+    font-weight: 800;
+}

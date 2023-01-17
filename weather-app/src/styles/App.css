@@ -1,0 +1,23 @@
+.App {
+    color: #03045E;
+    margin: auto;
+    width: 80%;
+    background-color: #CAF0F8;
+    padding: 2em;
+    margin-top: 1em;
+    border-radius: 2em;
+}
+
+button {
+    border-radius: 0.5em;
+    font-weight: 600;
+    text-align: center;
+    padding: 0.5em;
+    color: #03045E;
+}
+
+h1 {
+    text-align: center;
+    font-weight: 800;
+    font-size: 3em;
+}

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "../styles/ZipForm.css";
 
 const ZipForm = ({ handleSubmission }) => {
   const [currentZip, setCurrentLoc] = useState("");

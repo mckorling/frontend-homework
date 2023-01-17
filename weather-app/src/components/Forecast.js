@@ -1,4 +1,5 @@
 import Day from "./Day";
+import "../styles/Forecast.css";
 
 const Forecast = ({ weather }) => {
   const dayComponents = weather.map((day) => (
@@ -7,7 +8,7 @@ const Forecast = ({ weather }) => {
   return (
     <div>
       <h2>7 Day Forecast</h2>
-      {dayComponents}
+      <div className="week">{dayComponents}</div>
     </div>
   );
 };

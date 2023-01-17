@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "../styles/Toggle.css";
 
 const Toggle = ({ field, value }) => {
   const [toggle, setToggle] = useState(true);
@@ -6,7 +7,7 @@ const Toggle = ({ field, value }) => {
     setToggle(!toggle);
   };
   return (
-    <div>
+    <div className="oneToggle">
       <button onClick={handleClick}>{field}</button>
       {toggle ? <p>{value}</p> : <p></p>}
     </div>

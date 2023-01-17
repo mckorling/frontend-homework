@@ -1,6 +1,6 @@
 import axios from "axios";
 import "../styles/App.css";
-import CityInformation from "./CityInformation";
+import CurrentInfo from "./CurrentInfo";
 import Forecast from "./Forecast";
 import { useEffect, useState } from "react";
 import ZipForm from "./ZipForm";
@@ -26,8 +26,11 @@ function App() {
       )
       .then((response) => {
         let data = response.data;
+        let description = data["weather"][0]["description"];
+        description =
+          description.charAt(0).toUpperCase() + description.slice(1);
         setCurrentWeather({
-          description: data["weather"][0]["main"],
+          description: description,
           temp: data["main"]["temp"],
           location: data["name"],
         });
@@ -78,7 +81,6 @@ function App() {
             description: oneDay["weather"][0]["main"],
           });
         }
-        console.log(weather);
         setForecastWeather(weather);
         setDayHigh(data[0]["temp"]["max"]);
         setDayLow(data[0]["temp"]["min"]);
@@ -103,16 +105,16 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Weather App</h1>
-      <CityInformation
+      <h1>Weather</h1>
+      <CurrentInfo
         weather={currentWeather}
         toggleData={toggleData}
         low={dayLow}
         high={dayHigh}
-      ></CityInformation>
+      ></CurrentInfo>
       <ToggleList toggleData={toggleData}></ToggleList>
-      <ZipForm handleSubmission={getLocationInformation}></ZipForm>
       <Forecast weather={weekForecastWeather}></Forecast>
+      <ZipForm handleSubmission={getLocationInformation}></ZipForm>
     </div>
   );
 }
